@@ -6,70 +6,61 @@
 <title>Juno â€¢ Enterprise Account Report</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F8F9FA; color: #1a1a2e; }
-  header { background: #013A2F; color: white; padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; }
-  header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.3px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F8F9FA; color: #1a1a1a; }
+  header { background: #013A2F; color: #fff; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.7px; }
   header h1 span { color: #1CE49B; }
-  .header-right { text-align: right; }
-  .header-right .date { font-size: 0.9rem; opacity: 0.75; margin-bottom: 6px; }
-  .badge { background: #1CE49B; color: #013A2F; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
-  .container { max-width: 1400px; margin: 0 auto; padding: 32px 40px; }
-  .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 32px; }
-  .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-top: 4px solid #013A2F; }
+  .eader-right { text-align: right; }
+  .eader-right .date { font-size: 13px; color: #a0c4b8; margin-bottom: 6px; }
+  .badge-auto { background: #1CE49B; color: #013A2F; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 20px; letter-spacing: 1px; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #1CE49B; }
+  .card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #6c757d; font-weight: 600; margin-bottom: 6px; }
+  .card .value { font-size: 28px; font-weight: 800; color: #013A2F; line-height: 1; }
+  .card .sub { font-size: 12px; color: #6c757d; margin-top: 4px; }
   .card.at-risk { border-top-color: #dc3545; }
-  .card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; color: #6c757d; margin-bottom: 8px; }
-  .card .value { font-size: 2rem; font-weight: 700; color: #013A2F; }
-  .card .value.highlight { color: #1CE49B; }
   .card.at-risk .value { color: #dc3545; }
-  .legend { background: white; border-radius: 10px; padding: 16px 24px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-  .legend-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.8px; color: #6c757d; font-weight: 600; margin-right: 8px; }
-  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 500; }
-  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .legend { background: #fff; border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; display: flex; gap: 24px; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.07); flex-wrap: wrap; }
+  .legend-title { font-size: 12px; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.6px; margin-right: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 13px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
   .dot-red { background: #dc3545; }
   .dot-orange { background: #fd7e14; }
   .dot-yellow { background: #ffc107; }
-  .dot-green { background: #28a745; }
-  .table-wrapper { background: white; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
-  .table-header { padding: 18px 24px; border-bottom: 1px solid #e9ecef; display: flex; align-items: center; justify-content: space-between; }
-  .table-header h2 { font-size: 1rem; font-weight: 600; color: #013A2F; }
-  .table-header .count { font-size: 0.82rem; color: #6c757d; }
-  table { width: 100%; border-collapse: collapse; }
-  thead th { background: #f8f9fa; padding: 12px 16px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.6px; color: #6c757d; font-weight: 600; border-bottom: 1px solid #e9ecef; cursor: pointer; user-select: none; white-space: nowrap; }
-  thead th:hover { background: #e9ecef; color: #013A2F; }
-  thead th.sorted { color: #013A2F; }
-  tbody tr { border-bottom: 1px solid #f1f3f5; transition: background 0.15s; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: #f8f9fa; }
-  tbody tr.at-risk-row { background: #fff5f5; }
-  tbody tr.at-risk-row:hover { background: #ffe8e8; }
-  td { padding: 13px 16px; font-size: 0.86rem; }
-  td.num { color: #adb5bd; font-size: 0.78rem; }
-  td a { color: #013A2F; text-decoration: none; font-weight: 600; }
-  td a:hover { color: #1CE49B; text-decoration: underline; }
-  .stage-badge { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 0.72rem; font-weight: 600; }
-  .stage-onboarded { background: #d1fae5; color: #065f46; }
-  .stage-onboarding { background: #dbeafe; color: #1e40af; }
-  .stage-pending { background: #fef3c7; color: #92400e; }
-  .stage-none { background: #f3f4f6; color: #6b7280; }
-  .util-bar-wrap { display: flex; align-items: center; gap: 10px; }
-  .util-bar { height: 8px; border-radius: 4px; background: #e9ecef; width: 90px; overflow: hidden; flex-shrink: 0; }
-  .util-fill { height: 100%; border-radius: 4px; }
-  .util-pct { font-weight: 600; font-size: 0.84rem; min-width: 42px; }
-  .util-critical { color: #dc3545; }
-  .util-high { color: #fd7e14; }
-  .util-medium { color: #e6a800; }
-  .util-low { color: #28a745; }
-  .fill-critical { background: #dc3545; }
-  .fill-high { background: #fd7e14; }
-  .fill-medium { background: #ffc107; }
-  .fill-low { background: #28a745; }
-  footer { text-align: center; padding: 28px; font-size: 0.78rem; color: #adb5bd; }
-  footer strong { color: #6c757d; }
-  @media (max-width: 768px) {
-    .summary-cards { grid-template-columns: repeat(2, 1fr); }
-    header { flex-direction: column; gap: 12px; text-align: center; }
-    .container { padding: 20px 16px; }
-  }
+  .dot-green { background: #198754; }
+  .table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #013A2F; color: #fff; padding: 11px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; cursor: pointer; white-space: nowrap; user-select: none; }
+  thead th:hover { background: #024d3e; }
+  thead th.sorted-asc::after { content: ' â†‘'; }
+  thead th.sorted-desc::after { content: ' â†“'; }
+  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.1s; }
+  tbody tr:hover { background: #f5faf8; }
+  tbody tr.at-risk { background: #fff5f5; }
+  tbody tr.at-risk:hover { background: #ffe8e8; }
+  td { padding: 10px 14px; vertical-align: middle; }
+  td.num { font-weight: 700; color: #013A2F; font-size: 12px; }
+  .company-link { color: #013A2F; font-weight: 600; text-decoration: none; }
+  .company-link:hover { color: #1CE49B; text-decoration: underline; }
+  .stage-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .stage-onboarded { background: #d1f7e8; color: #0a5c3a; }
+  .stage-onboarding { background: #fff3cd; color: #7a5800; }
+  .stage-pending { background: #e2e3e5; color: #495057; }
+  .stage-none { background: #f0f0f0; color: #888; }
+  .util-cell { display: flex; align-items: center; gap: 8px; min-width: 120px; }
+  .util-bar-bg { flex: 1; background: #e9ecef; border-radius: 4px; height: 8px; overflow: hidden; }
+  .util-bar { height: 100%; border-radius: 4px; }
+  .util-critical { background: #dc3545; }
+  .util-high { background: #fd7e14; }
+  .util-medium { background: #ffc107; }
+  .util-low { background: #198754; }
+  .util-pct { font-weight: 700; font-size: 12px; min-width: 38px; text-align: right; }
+  .util-pct.critical { color: #dc3545; }
+  .util-pct.higa { color: #fd7e14; }
+  .util-pct.medium { color: #856404; }
+  .util-pct.low { color: #198754; }
+  footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
 </style>
 </head>
 <body>
@@ -77,98 +68,90 @@
 <header>
   <h1>Juno <span>â€¢</span> Enterprise Account Report</h1>
   <div class="header-right">
-    <div class="date">March 27, 2026</div>
-    <span class="badge">AUTOMATED Â· DAILY</span>
+    <div class="date">March 28, 2026</div>
+    <span class="badge-auto">AUTOMATED Â· DAILY</span>
   </div>
 </header>
 
 <div class="container">
 
-  <div class="summary-cards" id="summary-cards">
-    <!-- populated by JS -->
-  </div>
+  <div class="summary-grid" id="summaryCards"></div>
 
   <div class="legend">
     <span class="legend-title">Utilization Legend</span>
-    <div class="legend-item"><div class="legend-dot dot-red"></div> â‰¥80% Critical</div>
-    <div class="legend-item"><div class="legend-dot dot-orange"></div> 60â€“79% High</div>
-    <div class="legend-item"><div class="legend-dot dot-yellow"></div> 30â€“59% Medium</div>
-    <div class="legend-item"><div class="legend-dot dot-green"></div> &lt;30% Low</div>
+    <div class="legend-item"><div class="dot dot-red"></div> â‰¥80% Critical</div>
+    <div class="legend-item"><div class="dot dot-orange"></div> 60â€“79% High</div>
+    <div class="legend-item"><div class="dot dot-y…llow"></div> 30â€“59% Medium</div>
+    <div class="legend-item"><div class="dot dot-green"></div> &lt;30% Low</div>
   </div>
 
-  <div class="table-wrapper">
-    <div class="table-header">
-      <h2>Enterprise Accounts</h2>
-      <span class="count" id="table-count"></span>
-    </div>
-    <table id="accounts-table">
+  <div class="table-wrap">
+    <table id="accountTable">
       <thead>
         <tr>
-          <th>#</th>
-          <th onclick="sortTable('name')">Company</th>
-          <th onclick="sortTable('stage')">Stage</th>
-          <th onclick="sortTable('csm')">CSM</th>
-          <th onclick="sortTable('purchased')" class="sorted">Purchased</th>
-          <th onclick="sortTable('used')">Used</th>
-          <th onclick="sortTable('util')" class="sorted">Utilization</th>
-          <th onclick="sortTable('closedate')">Close Date</th>
-          <th onclick="sortTable('days')">Days Since Close</th>
+          <th onclick="sortTable(0)">#</th>
+          <th onclick="sortTable(1)">Company</th>
+          <th onclick="sortTable(2)">Stage</th>
+          <th onclick="sortTable(3)">CSM</th>
+          <th onclick="sortTable(4)">Purchased</th>
+          <th onclick="sortTable(5)">Used</th>
+          <th onclick="sortTable(6)">Utilization</th>
+          <th onclick="sortTable(7)">Close Date</th>
+          <th onclick="sortTable(8)">Days Since Close</th>
         </tr>
       </thead>
-      <tbody id="table-body">
-      </tbody>
+      <tbody id="tableBody"></tbody>
     </table>
   </div>
 </div>
 
 <footer>
-  <strong>Data source:</strong> HubSpot CRM â€” lifecycle stage: customer, annual_returns_purchased â‰¥ 500 â€” internal/test accounts excluded.<br>
-  Generated automatically on March 27, 2026 Â· Juno Tax Operations
+  Data sourced from HubSpot CRM (Juno Tax) Â· Filtered: lifecyclestage = customer, annual_returns_purchased â‰¥ 500 Â· Internal/test accounts excluded Â· Generated automatically on March 28, 2026
 </footer>
 
 <script>
-const TODAY = "2026-03-27";
+const TODAY = "2026-03-28";
 
 const accounts = [
   { name: "Tax Rite", url: "https://app.hubspot.com/contacts/45750757/record/0-2/51288201365", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 500, used: 421, util: 84.2, closedate: "2025-08-13" },
-  { name: "Harbor Group", url: "https://app.hubspot.com/contacts/45750757/record/0-2/48510675116", stage: "Onboarded", csm: "Makenzie Bothner", purchased: 500, used: 411, util: 82.2, closedate: "2026-01-06" },
-  { name: "Roberta A Otto CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/50741192352", stage: "Onboarded", csm: "Jonina Craig", purchased: 500, used: 382, util: 76.4, closedate: "2026-02-05" },
-  { name: "Pacific Financial Navigators", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36770084536", stage: "Onboarded", csm: "Devon Carlson", purchased: 810, used: 601, util: 74.2, closedate: "2025-11-26" },
-  { name: "ROR Tax Professionals", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39131456697", stage: "Onboarded", csm: "Devon Carlson", purchased: 605, used: 407, util: 67.3, closedate: "2025-11-25" },
-  { name: "Duncan & Associates", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39352993361", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 700, used: 434, util: 62.0, closedate: "2025-09-16" },
-  { name: "JCW Tax & Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39124441203", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 710, used: 429, util: 60.4, closedate: "2025-10-08" },
-  { name: "The Jones CPA Group", url: "https://app.hubspot.com/contacts/45750757/record/0-2/44066283354", stage: "Onboarded", csm: "Devon Carlson", purchased: 505, used: 300, util: 59.4, closedate: "2025-11-21" },
-  { name: "Seaside Resources", url: "https://app.hubspot.com/contacts/45750757/record/0-2/28841387310", stage: "", csm: "Makenzie Bothner", purchased: 530, used: 312, util: 58.9, closedate: "2025-06-16" },
-  { name: "CPA Financial Advantage", url: "https://app.hubspot.com/contacts/45750757/record/0-2/45225607272", stage: "Onboarded", csm: "Devon Carlson", purchased: 900, used: 522, util: 58.0, closedate: "2025-12-17" },
-  { name: "Wills & Associates (CHILD)", url: "https://app.hubspot.com/contacts/45750757/record/0-2/35988840307", stage: "Onboarded", csm: "Devon Carlson", purchased: 500, used: 283, util: 56.6, closedate: "2025-12-02" },
-  { name: "RLH Tax Services", url: "https://app.hubspot.com/contacts/45750757/record/0-2/40760610824", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 505, used: 268, util: 53.1, closedate: "2025-09-30" },
-  { name: "Travel Nurse Tax", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49437388717", stage: "Onboarded", csm: "Jonina Craig", purchased: 1300, used: 653, util: 50.2, closedate: "2026-01-20" },
+  { name: "HavÛÛÜÚÝÈ‹\›ˆšÎ‹ËØ\šXœÜÝ˜ÛÛKØÛÛXÝËÍMÍLÍMËÜ™XÛÜ™ÌL‹ÍLLÍLLMˆ‹ÝYÙNˆ“Û˜›Ø\™Y‹ÜÛNˆ’Ù[™[ÛÛÛÙ^H‹\˜Ú\ÙYˆL\ÙYˆÎ][ˆ‹Œ‹ÛÜÙY]NˆŒŒ6ëB2-=8-12" },
+  { name: "Robintha A`Otto CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/50741192352", stage: "Onboarded", csm: "Jonina Craig", purchased: 500, used: 388, util: 77.6, closedate: "2026-02-05" },
+  { name: "Pacific Financial Navigators", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36770084536", stage: "Onboarded", csm: "Devon Carlson", purchased: 810, used: 620, util: 76.5, closedate: "2025-11-26" },
+  { name: "ROR Tax Professionals", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39131456697", stage: "Onboarded", csm: "Devon Carlson", purchased: 605, used: 411, util: 67.9, closedate: "2025-11-25" },
+  { name: "Duncan & Associates", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39352993361", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 700, used: 437, util: 62.4, closedate: "2025-09-16" },
+  { name: "JCW Tax & Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39124441203", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 710, used: 435, util: 61.3, closedate: "2025-10-08" },
+  { name: "The Jones CPA Group", url: "https://app.hubspot.com/contacts/45750757/record/0-2/44066283354", stage: "Onboarded", csm: "Devon Carlson", purchased: 505, used: 307, util: 60.8, closedate: "2025-11-21" },
+  { name: "Seaside Resources", url: "https://app.hubspot.com/contacts/45750757/record/0-2/28841387310", stage: "", csm: "Makenzie Bothner", purchased: 530, used: 319, util: 60.2, closedate: "2025-06-16" },
+  { name: "CPA Financial Advantage", url: "https://app.hubspot.com/contacts/45750757/record/0-2/45225607272", stage: "Onboarded", csm: "Devon Carlson", purchased: 900, used: 527, util: 58.6, closedate: "2025-12-17" },
+  { name: "Wills & Associates (CHILD)", url: "https://app.hubspot.com/contacts/45750757/record/0-2/35988840307", stage: "Onboarded", csm: "Devon Carlson", purchased: 500, used: 287, util: 57.4, closedate: "2025-12-02" },
+  { name: "RLH Tax Services", url: "https://app.hubspot.com/contacts/45750757/record/0-2/40760610824", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 505, used: 270, util: 53.5, closedate: "2025-09-30" },
+  { name: "Travel Nurse Tax", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49437388717", stage: "Onboarded", csm: "Jonina Craig", purchased: 1300, used: 666, util: 51.2, closedate: "202ëB20" },
   { name: "KBI Consulting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39884129584", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 500, used: 245, util: 49.0, closedate: "2025-10-31" },
-  { name: "K & B Business Service", url: "https://app.hubspot.com/contacts/45750757/record/0-2/40248436499", stage: "Onboarded", csm: "Devon Carlson", purchased: 505, used: 227, util: 44.9, closedate: "2025-09-30" },
-  { name: "ElevatedCPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/46591173018", stage: "Onboarded", csm: "Devon Carlson", purchased: 700, used: 291, util: 41.6, closedate: "2025-12-09" },
-  { name: "Dark Horse CPAs", url: "https://app.hubspot.com/contacts/45750757/record/0-2/52980749656", stage: "Currently Onboarding", csm: "Devon Carlson", purchased: 2000, used: 784, util: 39.2, closedate: "2026-01-14" },
-  { name: "Vincere Tax", url: "https://app.hubspot.com/contacts/45750757/record/0-2/25473213454", stage: "Onboarded", csm: "Jonina Craig", purchased: 2500, used: 875, util: 35.0, closedate: "2025-02-18" },
-  { name: "Arete Partners", url: "https://app.hubspot.com/contacts/45750757/record/0-2/22201859510", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 500, used: 159, util: 31.8, closedate: "2024-08-16" },
-  { name: "Eck Tax & Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36259037616", stage: "Onboarded", csm: "Devon Carlson", purchased: 593, used: 183, util: 30.9, closedate: "2025-12-05" },
-  { name: "PAZTAX", url: "https://app.hubspot.com/contacts/45750757/record/0-2/44539392376", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 296, util: 29.6, closedate: "2025-12-09" },
-  { name: "Firestone Tax & Accounting Services (CHILD)", url: "https://app.h5bspot.com/contacts/45750757/record/0-2/46441316171", stage: "", csm: "Devon Carlson", purchased: 1700, used: 485, util: 28.5, closedate: "2025-12-17" },
-  { name: "LedgerWay", url: "https://app.hubspot.com/contacts/45750757/record/0-2/26892667239", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 284, util: 28.4, closedate: "2025-12-23" },
+  { name: "K & B Business Service", url: "https://app.hubspot.com/contacts/45750757/record/0-2/40248436499", stage: "Onboarded", csm: "Devon Carlson", purchased: 505, used: 229, util: 45.3, closedate: "2025-09-30" },
+  { name: "ElevatedCPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/465=1173018", stage: "Onboarded", csm: "Devon Carlson", purchased: 700, used: 294, util: 42.0, closedate: "2025-12-09" },
+  { name: "Dark Horse CPAs", url: "https://app.hubspot.com/contacts/45750757/record/0-2/52980749656", stage: "Currently Onboarding", csm: "Devon Carlson", purchased: 2000, used: 803, util: 40.2, closedate: "2026-01-14" },
+  { name: "Vincere Tax", url: "https://app.hubspot.com/contacts/45750757/record/0-2/25473213454", stage: "Onboarded", csm: "Jonina Craig", purchased: 2500, used: 902, util: 36.1, closedate: "2025-02-18" },
+  { name: "Arete Partners", url: "https://app.hubspot.com/contacts/45750757/record/0-2/22201859510", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 500, used: 163, util: 32.6, closedate: "2024-08-16" },
+  { name: "Eck Tax & Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36259037616", stage: "Onboarded", csm: "Devon Carlson", purchased: 593, used: 187, util: 31.5, closedate: "2025-12-05" },
+  { name: "PAZTAX", url: "https://app.hubspot.com/contacts/45750757/record/0-2/44539392376", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 302, util: 30.2, closedate: "2025-12-09" },
+  { name: "Firestone Tax & Accounting Services", url: "https://app.hubspot.com/contacts/45750757/record/0-2/46441316171", stage: "", csm: "Devon Carlson", purchased: 1700, used: 498, util: 29.3, closedate: "2025-12-17" },
+  { name: "LedgerWay", url: "https://app.hubspot.com/contacts/45750757/record/0-2/26892667239", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 291, util: 29.1, closedate: "2025-12-23" },
+  { name: "Daniel J Feyka CPA PC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/52511393286", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 1000, used: 266, util: 26.6, closedate: "2026-03-04" },
   { name: "CLA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/51632646515", stage: "Currently Onboarding", csm: "Devon Carlson", purchased: 500, used: 129, util: 25.8, closedate: "2026-02-12" },
   { name: "Golden State Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39716136455", stage: "", csm: "Makenzie Bothner", purchased: 500, used: 128, util: 25.6, closedate: "2025-09-26" },
-  { name: "Daniel J Feyka CPA PC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/52511393286", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 1000, used: 245, util: 24.5, closedate: "2026-03-04" },
-  { name: "Doc Wealth", url: "https://app.hubspot.com/contacts/45750757/record/0-2/34892698939", stage: "Onboarded", csm: "Jonina Craig", purchased: 850, used: 198, util: 23.3, closedate: "2025-09-21" },
-  { name: "R. Berger & Company", url: "https://app.hubspot.com/contacts/45750757/record/0-2/47547455068", stage: "Onboarded", csm: "Devon Carlson", purchased: 700, used: 137, util: 19.6, closedate: "2026-01-07" },
-  { name: "Badu Tax Services", url: "https://app.hubspot.com/contacts/45750757/record/0-2/30626604906", stage: "Onboarded", csm: "Devon Carlson", purchased: 800, used: 143, util: 17.9, closedate: "2025-09-11" },
+  { name: "Doc Wealth", url: "https://app.hubspot.com/contacts/45750757/record/0-2/34892698939", stage: "Onboarded", csm: "Jonina Craig", purchased: 850, used: 208, util: 24.5, closedate: "2025-09-21" },
+  { name: "R. Berger & Company", url: "https://app.hubspot.com/contacts/45750757/record/0-2/47547455068", stage: "Onboarded", csm: "Devon Carlson", purchased: 700, used: 145, util: 20.7, closedate: "2026-01-07" },
+  { name: "Badu Tax Services", url: "https://app.hubspot.com/contacts/45750757/record/0-2/30626604906", stage: "Onboarded", csm: "Devon Carlson", purchased: 800, used: 152, util: 19.0, closedate: "2025-09-11" },
   { name: "Sentinel Tax Advisors (PARENT)", url: "https://app.hubspot.com/contacts/45750757/record/0-2/40750708539", stage: "Onboarded", csm: "Jonina Craig", purchased: 700, used: 112, util: 16.0, closedate: "2025-08-28" },
-  { name: "Privity CPA Partners", url: "https://app.hubspot.com/contacts/45750757/record/0-2/37018388645", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 129, util: 12.9, closedate: "2025-08-28" },
-  { name: "thebeaconadvisors.com", url: "https://app.hubspot.com/contacts/45750757/record/0-2/35222953101", stage: "Onboarded", csm: "Devon Carlson", purchased: 500, used: 63, util: 12.6, closedate: "2025-10-29" },
+  { name: "Privity CPA Partners", url: "https://app.hubspot.com/contacts/45750757/record/0-2/37018388645", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 130, util: 13.0, closedate: "2025-08-28" },
+  { name: "thebeaconadvisors.com", url: "https://app.hubspot.com/contacts/45750757/record/0-2/35222953101", stage: "Onboarded", csm: "Devon Carlson", purchased: 500, used: 64, util: 12.8, closedate: "2025-10-29" },
   { name: "Smith Tax & Accounting LLC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36977823385", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 500, used: 57, util: 11.4, closedate: "2025-09-08" },
-  { name: "Lijin J Philip CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49404746847", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 109, util: 10.9, closedate: "2026-01-22" },
-  { name: "Lutz | Hoenig CPAs LLC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49265311314", stage: "Onboarded", csm: "Jonina Craig", purchased: 600, used: 42, util: 7.0, closedate: "2025-12-02" },
+  { name: "Lijin J Philip CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49404746847", stage: "Onboarded", csm: "Devon Carlson", purchased: 1000, used: 113, util: 11.3, closedate: "2026-01-22" },
+  { name: "Allison Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/38108322318", stage: "Onboarded", csm: "Devon Carlson", purchased: 3000, used: 242, util: 8.1, closedate: "2025-08-26" },
+  { name: "Lutz | Hoenig CPAs LLC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49265311314", stage: "Onboarded", csm: "Jonina Craig", purchased: 600, used: 43, util: 7.2, closedate: "2025-12-02" },
   { name: "OC Accountancy", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49745381529", stage: "Onboarded", csm: "Jonina Craig", purchased: 700, used: 46, util: 6.6, closedate: "2025-12-31" },
-  { name: "Allison Accounting", url: "https://app.hubspot.com/contacts/45750757/record/0-2/38108322318", stage: "Onboarded", csm: "Devon Carlson", purchased: 3000, used: 197, util: 6.6, closedate: "2025-08-26" },
   { name: "Taxes Made EZ", url: "https://app.hubspot.com/contacts/45750757/record/0-2/36664844106", stage: "Onboarded", csm: "Jonina Craig", purchased: 500, used: 29, util: 5.8, closedate: "2025-08-27" },
-  { name: "Kapper CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/30145576572", stage: "", csm: "â€”", purchased: 2000, used: 95, util: 4.8, closedate: "2025-01-27" },
+  { name: "Kapper CPA", url: "https://app.hubspot.com/contacts/45750757/record/0-2/30145576572", stage: "", csm: "â€”", purchased: 2000, used: 95, util: 4.75, closedate: "2025-01-27" },
   { name: "nahastone.com", url: "https://app.hubspot.com/contacts/45750757/record/0-2/21650969374", stage: "Onboarded", csm: "Jonina Craig", purchased: 500, used: 21, util: 4.2, closedate: "2025-02-03" },
   { name: "thllp", url: "https://app.hubspot.com/contacts/45750757/record/0-2/49740974084", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 1000, used: 36, util: 3.6, closedate: "2024-08-28" },
   { name: "District Tax", url: "https://app.hubspot.com/contacts/45750757/record/0-2/35460261012", stage: "Onboarded", csm: "Kendyll Woolsey", purchased: 600, used: 18, util: 3.0, closedate: "2025-07-30" },
@@ -178,105 +161,117 @@ const accounts = [
   { name: "True North Advisory Group LLC", url: "https://app.hubspot.com/contacts/45750757/record/0-2/39521106272", stage: "Pending Onboarding Call", csm: "Devon Carlson", purchased: 2000, used: 1, util: 0.1, closedate: "2025-11-03" }
 ];
 
-let sortKey = 'util';
-let sortDir = -1; // -1 = desc, 1 = asc
-
 function daysSince(dateStr) {
-  const today = new Date(TODAY);
-  const d = new Date(dateStr);
-  return Math.floor((today - d) / (1000 * 60 * 60 * 24));
+  const today€= new Date(TODAY);
+  const close = new Date(dateStr);
+  return Math.floor((today€- close) / 86400000);
 }
 
 function utilClass(u) {
-  if (u >= 80) return 'util-critical';
-  if (u >= 60) return 'util-high';
-  if (u >= 30) return 'util-medium';
-  return 'util-low';
-}
-function fillClass(u) {
-  if (u >= 80) return 'fill-critical';
-  if (u >= 60) return 'fill-high';
-  if (u >= 30) return 'fill-medium';
-  return 'fill-low';
-}
-function stageBadge(stage) {
-  if (!stage) return '<span class="stage-badge stage-none">â€”</span>';
-  if (stage === 'Onboarded') return '<span class="stage-badge stage-onboarded">Onboarded</span>';
-  if (stage.includes('Currently')) return '<span class="stage-badge stage-onboarding">Currently Onboarding</span>';
-  if (stage.includes('Pending')) return '<span class="stage-badge stage-pending">Pending Onboarding</span>';
-  return `<span class="stage-badge stage-none">${stage}</span>`;
+  if (u >= 80) return 'critical';
+  if (u >= 60) return 'high';
+  if (u >= 30) return 'medium';
+  return 'low';
 }
 
-function renderSummary(data) {
-  const total = data.length;
-  const totalPurchased = data.reduce((s, a) => s + a.purchased, 0);
-  const totalUsed = data.reduce((s, a) => s + a.used, 0);
-  const overallUtil = (totalUsed / totalPurchased * 100).toFixed(1);
-  const atRisk = data.filter(a => a.util >= 80).length;
-
-  document.getElementById('summary-cards').innerHTML = `
-    <div class="card">
-      <div class="label">Total Accounts</div>
-      <div class="value">${total}</div>
-    </div>
-    <div class="card">
-      <div class="label">Total Purchased</div>
-      <div class="value">${totalPurchased.toLocaleString()}</div>
-    </div>
-    <div class="card">
-      <div class="label">Total Used Â· Overall Util</div>
-      <div class="value highlight">${totalUsed.toLocaleString()} <small style="font-size:1rem;color:#6c757d">(${overallUtil}%)</small></div>
-    </div>
-    <div class="card at-risk">
-      <div class="label">At Risk (â‰¥80%)</div>
-      <div class="value">${atRisk}</div>
-    </div>
-  `;
-  document.getElementById('table-count').textContent = `${total} accounts`;
+function stageHTML(s) {
+  if (!s) return '<span class="stage-badge stage-none">â€”</span>';
+  if (s === 'Onboarded') return '<span class="stage-badge stage-onboarded">Onboarded</span>';
+  if (s.includes('Currently')) return '<span class="stage-badge stage-onboarding">Currently Onboarding</span>';
+  if (s.includes('Pending')) return '<span class="stage-badge stage-pending">Pending Onboarding</span>';
+  return `<span class="stage-badge stage-none">${s}</span>`;
 }
 
-function renderTable(data) {
-  const sorted = [...data].sort((a, b) => {
-    let va = a[sortKey], vb = b[sortKey];
-    if (sortKey === 'days') { va = daysSince(a.closedate); vb = daysSince(b.closedate); }
-    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
-    return sortDir * (va - vb);
+function formatDate(d) {€ const [y, m, day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[parseInt(m)-1]} ${parseInt(day)}, ${y}`;
+}
+
+// Build summary
+const totalPurchased = accounts.reduce((s, a) => s + a.purchased, 0);
+const totalUsed = accounts.reduce((s, a) => s + a.used, 0);
+const overallUtil = (totalUsed / totalPurchased * 100).toFixed(1);
+const atRisk = accounts.filter(a => a.util >= 80).lengta;
+
+document.getElementById('summaryCards').innerHTML = `
+  <div class="card">
+    <div class="label">Total Enterprise Accounts</div>
+    <div class="value">${accounts.length}</div>
+    <div class="sub">lifecyclestage = customer, â‰¥500 purchased</div>
+  </div>
+  <div class="card">
+    <div class="label">Total Purchased</div>
+    <div class="value">${totalPurchased.toLocaleString()}</div>
+    <div class="sub">annual returns purchased</div>
+  </div>
+  <div class="card">
+    <div class="label">Total Used / Utilization</div>
+    <div class="value">${totalUsed.toLocaleString()}</div>
+    <div class="sub">Overall: ${overallUtil}% utilized</div>
+  </div>
+  <div class="card at-risk">
+    <div class="label">At-Risk Accounts</div>
+    <div class="value">${atRisk}</div>
+    <div class="sub">â‰¥80% utilization</div>
+  </div>
+`;
+
+let sortCol = 6, sortDir = -1;
+
+function renderTable() {
+  const sorted = [...accounts].sort((a, b) => {
+    const vals = [
+      (_, i) => i,
+      (x) => x.name,
+      (x) => x.stage,
+      (x) => x.csm,
+      (x) => x.purchased,
+      (x) => x.used,
+      (x) => x.util,
+      (x) => x.closedate,
+      (x) => daysSince(x.closedate)
+    ];
+    const va = vals[sortCol](a);
+    const vb = vals[sortCol](b);
+    return sortDir * (va < vb ? -1 : va > vb ? 1 : 0);
   });
 
-  const tbody = document.getElementById('table-body');
-  tbody.innerHTML = sorted.map((acc, i) => {
-    const days = daysSince(acc.closedate);
-    const pct = Math.min(acc.util, 100);
-    const rowClass = acc.util >= 80 ? 'at-risk-row' : '';
+  document.getElementById('tableBody').innerHTML = sorted.map((a, i) => {
+    const uc = utilClass(a.util);
+    const ds = daysSince(a.closedate);
+    const barW = Math.min(a.util, 100);
     return `
-      <tr class="${rowClass}">
+      <tr class="${a.util >= 80 ? 'at-risk' : ''}">
         <td class="num">${i + 1}</td>
-        <td><a href="${acc.url}" target="_blank">${acc.name}</a></td>
-        <td>${stageBadge(acc.stage)}</td>
-        <td>${acc.csm}</td>
-        <td>${acc.purchased.toLocaleString()}</td>
-        <td>${acc.used.toLocaleString()}</td>
+        <td><a class="company-link" href="${a.url}" target="_blank">${a.name}</a></td>
+        <td>${stageHTML(a.stage)}</td>
+        <td>${a.csm}</td>
+        <td style="text-align:right;font-weight:600">${a.purchased.toLocaleString()}</td>
+        <td style="text-align:right;font-weight:600">${a.used.toLocaleString()}</td>
         <td>
-          <div class="util-bar-wrap">
-            <div class="util-bar"><div class="util-fill ${fillClass(acc.util)}" style="width:${pct}%"></div></div>
-            <span class="util-pct ${utilClass(acc.util)}">${acc.util.toFixed(1)}%</span>
+          <div class="util-cell">
+            <div class="util-bar-bg"><div class="util-bar util-${uc}" style="width:${barW}%"></div></div>
+            <span class="util-pct ${uc}">${a.util.toFixed(1)}%</span>
           </div>
         </td>
-        <td>${acc.closedate}</td>
-        <td>${days.toLocaleString()}d</td>
-      </tr>
-    `;
+        <td>${formatDate(a.closedate)}</td>
+        <td style="text-align:right">${ds}d</td>
+      </tr>`;
   }).join('');
+
+  document.querySelectorAll('thead th').forEach((th, i) => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (i === sortCol) th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
+  });
 }
 
-function sortTable(key) {
-  if (sortKey === key) { sortDir *= -1; }
-  else { sortKey = key; sortDir = -1; }
-  renderTable(accounts);
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = col === 0 ? 1 : -1; }
+  renderTable();
 }
 
-renderSummary(accounts);
-renderTable(accounts);
+renderTable();
 </script>
 </body>
 </html>
